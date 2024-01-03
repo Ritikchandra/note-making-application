@@ -1,5 +1,6 @@
-
 import React, { useState, useEffect } from "react";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import plus from "../src/assets/eventsModalCloseButton.png";
 
 const Modal = (props) => {
@@ -42,7 +43,7 @@ const Modal = (props) => {
         <div className="modalContainer">
           <div className="modalWrapper">
             <div className="modalTop">
-              <div className="modalTitle">
+              <div className="modalTitle" onClick={handleEditClick}>
                 {editMode ? (
                   <input
                     type="text"
@@ -58,21 +59,23 @@ const Modal = (props) => {
                 {editMode ? (
                   <>
                     <button onClick={handleSaveClick} className="button">Save Note</button>
-                    <button onClick={() => setEditMode(false)}className="button">Cancel</button>
+                    <button onClick={() => setEditMode(false)} className="button">Cancel</button>
                   </>
                 ) : (
-                  <button onClick={handleEditClick}className="button">Edit Note</button>
+                  <button onClick={handleEditClick} className="button">Edit Note</button>
                 )}
               </div>
             </div>
-            <div className="textSection"onClick={handleEditClick}>
+            <div className="textSection" onClick={handleEditClick}>
               {editMode ? (
-                <textarea
+                <ReactQuill
                   value={noteText}
-                  onChange={(e) => setNoteText(e.target.value)}
+                  onChange={(value) => setNoteText(value)}
                 />
               ) : (
-                <div>{noteText}</div>
+                <div className="noteTextDiv">
+                  <span dangerouslySetInnerHTML={{ __html: noteText.replace(/\n/g, '<br>') }} />
+                </div>
               )}
             </div>
           </div>
