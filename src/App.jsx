@@ -20,15 +20,9 @@ function App() {
   const saveSlidesToLocalStorage = (updatedSlides) => {
     localStorage.setItem("slides", JSON.stringify(updatedSlides));
   };
-
-  // const handleAddNote = () => {
-  //   const newSlides = [...slides, slides.length + 1];
-  //   setSlides(newSlides);
-  //   saveSlidesToLocalStorage(newSlides);
-  // };
   const handleAddNote = () => {
     const newSlide = {
-      id: Date.now(), // Use a unique identifier for each slide
+      id: Date.now(),
       title: "Note Title",
       noteText: "Note Text",
     };
@@ -46,24 +40,18 @@ function App() {
     setSlides(updatedSlides);
     saveSlidesToLocalStorage(updatedSlides);
   };
-  // const handleSaveNoteText = (slide, updatedNoteText) => {
-  //   const updatedSlides = slides.map((s) =>
-  //     s === slide ? { ...s, noteText: updatedNoteText } : s
-  //   );
-
-  //   setSlides(updatedSlides);
-  //   saveSlidesToLocalStorage(updatedSlides);
-  // };
   const handleSaveNoteText = (slide, updatedNoteText, updatedTitle) => {
     const updatedSlides = slides.map((s) =>
-      s.id === slide.id ? { ...s, noteText: updatedNoteText, title: updatedTitle } : s
+      s.id === slide.id
+        ? { ...s, noteText: updatedNoteText, title: updatedTitle }
+        : s
     );
-  
+
     setSlides(updatedSlides);
     saveSlidesToLocalStorage(updatedSlides);
   };
   const sanitizeHtml = (html) => {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent || "";
   };
   return (
@@ -87,48 +75,32 @@ function App() {
               Add Notes
             </p>
           ) : (
-            // <Swiper
-            //   effect={"cards"}
-            //   grabCursor={true}
-            //   modules={[EffectCards]}
-            //   className="mySwiper"
-            // >
-            //   {slides.map((slide) => (
-            //     <SwiperSlide key={slide.id}>
-            //       <div>
-            //         <p>{slide.title}</p>
-            //         <p>{slide.noteText.length > 20
-            //             ? `${slide.noteText.slice(0, 20)}...`
-            //             : slide.noteText.length > 0
-            //             ? slide.noteText.slice(3, slide.noteText.length - 4)
-            //             : ''}</p>
-            //         <button onClick={() => handleView(slide)}>View/Edit</button>
-            //         <button onClick={() => handleDelete(slide)}>Delete</button>
-            //       </div>
-            //     </SwiperSlide>
-            //   ))}
-            // </Swiper>
             <Swiper
-  effect={"cards"}
-  grabCursor={true}
-  modules={[EffectCards]}
-  className="mySwiper"
->
-  {slides.map((slide) => (
-    <SwiperSlide key={slide.id}>
-      <div>
-        <p>{slide.title}</p>
-        <p>{sanitizeHtml(slide.noteText).length > 15
-            ? `${sanitizeHtml(slide.noteText).slice(0, 15)}...`
-            : sanitizeHtml(slide.noteText).length > 0
-            ? sanitizeHtml(slide.noteText).slice(0, sanitizeHtml(slide.noteText).length)
-            : ''}</p>
-        <button onClick={() => handleView(slide)}>View/Edit</button>
-        <button onClick={() => handleDelete(slide)}>Delete</button>
-      </div>
-    </SwiperSlide>
-  ))}
-</Swiper>
+              effect={"cards"}
+              grabCursor={true}
+              modules={[EffectCards]}
+              className="mySwiper"
+            >
+              {slides.map((slide) => (
+                <SwiperSlide key={slide.id}>
+                  <div>
+                    <p>{slide.title}</p>
+                    <p>
+                      {sanitizeHtml(slide.noteText).length > 15
+                        ? `${sanitizeHtml(slide.noteText).slice(0, 15)}...`
+                        : sanitizeHtml(slide.noteText).length > 0
+                        ? sanitizeHtml(slide.noteText).slice(
+                            0,
+                            sanitizeHtml(slide.noteText).length
+                          )
+                        : ""}
+                    </p>
+                    <button onClick={() => handleView(slide)}>View/Edit</button>
+                    <button onClick={() => handleDelete(slide)}>Delete</button>
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
           )}
         </div>
       </div>
