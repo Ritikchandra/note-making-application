@@ -121,7 +121,7 @@ function App() {
         <p>{sanitizeHtml(slide.noteText).length > 15
             ? `${sanitizeHtml(slide.noteText).slice(0, 15)}...`
             : sanitizeHtml(slide.noteText).length > 0
-            ? sanitizeHtml(slide.noteText).slice(0, sanitizeHtml(slide.noteText).length - 4)
+            ? sanitizeHtml(slide.noteText).slice(0, sanitizeHtml(slide.noteText).length)
             : ''}</p>
         <button onClick={() => handleView(slide)}>View/Edit</button>
         <button onClick={() => handleDelete(slide)}>Delete</button>
